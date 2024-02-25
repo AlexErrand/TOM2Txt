@@ -15,20 +15,19 @@ def extract_unique_pairings(html_content):
             # Check if row has enough cells with player data
             if len(cells) == 4:
                 table_number = cells[0].get_text(strip=True)
-                # If we've already processed this table number, skip it
+                # If we've already processed the table number, skip it
                 if table_number in seen_tables:
                     continue
                 seen_tables.add(table_number)
                 
                 player1_data = cells[1].get_text(strip=True)
                 player2_data = cells[3].get_text(strip=True)
-                # Extract the player's name and record, excluding match points
+                # Extract the player's name and record, excluding match points 
                 player1 = ' '.join(player1_data.split(' ')[:-1]).rsplit(' (', 1)[0] + ')'
                 player2 = ' '.join(player2_data.split(' ')[:-1]).rsplit(' (', 1)[0] + ')'
                 pairing = f"{player1} vs. {player2}"
                 pairings.append(pairing)
 
-    # Join all pairings into one line of text, separated by a comma
     return ', '.join(pairings)
 
 def select_input_file():
@@ -46,7 +45,7 @@ def select_output_folder():
 def process_files():
     input_file_path = input_entry.get()
     output_folder_path = output_entry.get()
-    output_file_path = f"{output_folder_path}/pairings_output.txt"  # Define your output filename
+    output_file_path = f"{output_folder_path}/pairings_output.txt"  
     
     with open(input_file_path, 'r', encoding='utf-8') as file:
         html_content = file.read()
@@ -58,11 +57,9 @@ def process_files():
     
     status_label.config(text="Pairings have been written to the output file.")
 
-# Set up the main application window
 root = tk.Tk()
 root.title("Pairings Extractor")
 
-# Create a frame for the input file selection
 input_frame = tk.Frame(root)
 input_frame.pack(padx=10, pady=5)
 input_label = tk.Label(input_frame, text="Input HTML File:")
@@ -72,7 +69,6 @@ input_entry.pack(side=tk.LEFT, padx=5)
 input_button = tk.Button(input_frame, text="Browse", command=select_input_file)
 input_button.pack(side=tk.LEFT)
 
-# Create a frame for the output folder selection
 output_frame = tk.Frame(root)
 output_frame.pack(padx=10, pady=5)
 output_label = tk.Label(output_frame, text="Output Folder:")
@@ -82,13 +78,11 @@ output_entry.pack(side=tk.LEFT, padx=5)
 output_button = tk.Button(output_frame, text="Browse", command=select_output_folder)
 output_button.pack(side=tk.LEFT)
 
-# Create a frame for the process button
 process_frame = tk.Frame(root)
 process_frame.pack(padx=10, pady=10)
 process_button = tk.Button(process_frame, text="Process Files", command=process_files)
 process_button.pack()
 
-# Status label
 status_label = tk.Label(root, text="", relief=tk.SUNKEN, anchor=tk.W)
 status_label.pack(fill=tk.X, padx=10, pady=5)
 
